@@ -2,7 +2,7 @@
   hosts: tag_ubuntu
   become: true
   user: ubuntu
-  gather_facts: no
+  gather_facts: yes
 
   roles:
     - { role: common}

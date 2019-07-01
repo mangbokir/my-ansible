@@ -1,3 +1,8 @@
+- name: Chage sources repo list to Kambing
+  copy: src=id.sources.list dest=/etc/apt/sources.list owner=root group=root mode=0644
+  when: repo_location == 'id' and ansible_lsb.codename == 'bionic'
+  tags: common
+
 - name: Update Repository
   apt:
     update_cache: yes
@@ -9,3 +14,4 @@
      - curl
      - screen
   tags: common
+

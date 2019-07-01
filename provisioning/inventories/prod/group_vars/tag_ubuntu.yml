@@ -1,4 +1,5 @@
 current_environment: prod
+repo_location: id
 ansible_sudo_pass: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           36353065613461616365343539333737313734363030313538646630323763356334373438343465
