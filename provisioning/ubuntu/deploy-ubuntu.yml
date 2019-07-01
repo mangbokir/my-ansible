@@ -1,0 +1,8 @@
+- name: Deploy ubuntu
+  hosts: ubuntu
+  become: yes
+  user: ubuntu
+  gather_facts: yes
+
+  roles:
+    - { role: common}

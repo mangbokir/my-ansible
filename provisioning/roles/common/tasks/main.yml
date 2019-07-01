@@ -1,0 +1,4 @@
+- name: Update Repository
+  apt:
+    update_cache: yes
+  tags: common
