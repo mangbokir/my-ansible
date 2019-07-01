@@ -2,3 +2,10 @@
   apt:
     update_cache: yes
   tags: common
+
+- name: Install basic packages
+  apt: name={{ item }}
+  with_items:
+     - curl
+     - screen
+  tags: common
