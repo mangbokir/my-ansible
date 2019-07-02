@@ -1,0 +1,9 @@
+- name: Deploy Grafana
+  hosts: tag_grafana
+  become: true
+  user: ubuntu
+  gather_facts: yes
+
+  roles:
+    - { role: common}
+    - { role: grafana-server}
