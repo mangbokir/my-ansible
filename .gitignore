@@ -1,0 +1,6 @@
+# vagrant stuff
+platforms/**/.vagrant
+platforms/**/*.log
+
+# OS stuff
+.DS_Store
