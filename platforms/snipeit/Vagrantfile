@@ -1,0 +1,39 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+SNIPEIT_SH_URL= "https://raw.githubusercontent.com/snipe/snipe-it/master/snipeit.sh"
+NETWORK_BRIDGE= "en0: Wi-Fi (AirPort)"
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "xenial" do |xenial|
+    xenial.vm.box = "ubuntu/xenial64"
+    xenial.vm.hostname = 'snipeit-vagrant'
+    xenial.vm.network :private_network, ip: "10.10.11.11"
+    xenial.vm.network :forwarded_port, guest: 22, host: 12312, id: 'ssh'
+#    xenial.vm.network "public_network", bridge: NETWORK_BRIDGE
+#    xenial.vm.provision :shell, :inline => "wget #{SNIPEIT_SH_URL}"
+#    xenial.vm.provision :shell, :inline => "chmod 755 snipeit.sh"
+  end
+
+  config.vm.synced_folder "./app","/var/www/", create:true,
+      :owner => "vagrant",
+      :group => "www-data",
+      :mount_options => ["dmode=775","fmode=664"]
+
+  config.vm.provider :virtualbox do |vb|
+      # Use VBoxManage to customize the VM. For example to change memory:
+      vb.customize ["modifyvm", :id, "--memory", "4192"]
+      vb.customize ["modifyvm", :id, "--acpi",   "on"]
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+      vb.customize ["modifyvm", :id, "--cpus",   "2"]
+  end
+
+#  config.vm.provision "ansible" do |ansible|
+#    ansible.host_key_checking = false
+#    ansible.playbook = "../../provisioning/snipeit/deploy-snipeit-vagrant.yml"
+#    ansible.inventory_path = "../../provisioning/inventories/vagrant"
+#    ansible.vault_password_file = File.expand_path('~/.vagrant_vault')
+#    ansible.verbose = 'v'
+#  end
+end

@@ -1,0 +1,9 @@
+- name: Vagrant Snipe IT
+  hosts: vagrant-snipeit
+  become: true
+  gather_facts: yes
+
+  roles:
+    - { role: common}
+    - { role: nginx}
+
