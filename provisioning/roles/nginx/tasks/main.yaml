@@ -9,13 +9,10 @@
     state: present
   tags: nginx
 
-- include: config-team-nyender.yaml
-  tags: nginx, nginx-config
-
 - name: Start and enabled nginx service
   systemd:
     name: nginx
     state: restarted
     enabled: yes
-  tags: nginx, nginx-config
+  tags: nginx
 

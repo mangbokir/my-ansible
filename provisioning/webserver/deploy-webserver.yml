@@ -1,0 +1,10 @@
+- name: Deploy webserver
+  hosts: tag_webserver
+  become: true
+  user: ubuntu
+  gather_facts: yes
+
+  roles:
+    - { role: common}
+    - { role: nginx}
+    - { role: webserver}

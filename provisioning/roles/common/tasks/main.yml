@@ -1,9 +1,9 @@
-- name: Chage sources repo list to Kambing
+- name: Chage sources repo list to Kambing Bionic
   copy: src=id.sources.list-bionic dest=/etc/apt/sources.list owner=root group=root mode=0644
   when: repo_location == 'id' and ansible_lsb.codename == 'bionic'
   tags: common
 
-- name: Chage sources repo list to Kambing
+- name: Chage sources repo list to Kambing Xenial
   copy: src=id.sources.list-xenial dest=/etc/apt/sources.list owner=root group=root mode=0644
   when: repo_location == 'id' and ansible_lsb.codename == 'xenial'
   tags: common

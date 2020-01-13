@@ -1,0 +1,12 @@
+- name: Copy config team-nyender
+  copy:
+    src: team-nyender.xyz
+    dest: /etc/nginx/sites-available
+  tags: team-nyender
+
+- name: Start and enabled nginx service
+  systemd:
+    name: nginx
+    state: restarted
+    enabled: yes
+  tags: team-nyender
