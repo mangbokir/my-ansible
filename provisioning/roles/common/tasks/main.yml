@@ -16,6 +16,7 @@
 - name: Install basic packages
   apt: name={{ item }}
   with_items:
+     - software-properties-common
      - curl
      - screen
      - tmux

@@ -1,0 +1,5 @@
+- name: restart fpm
+  service: name={{ item }} state=restarted
+  with_items:
+    - php7.1-fpm
+
