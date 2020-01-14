@@ -70,7 +70,7 @@
   tags: snipeit, composer
 
 - name: copy env file
-  template:
+  copy:
     src: .env
     dest: "{{ snipeit_dir}}"
   tags: snipeit
