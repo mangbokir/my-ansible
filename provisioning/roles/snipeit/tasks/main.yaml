@@ -1,0 +1,88 @@
+- name: Create Group Snipe IT
+  group:
+    name: "{{ snipeit_user }}"
+    gid: 777
+    state: present
+  tags: snipeit
+
+- name: Create User snipe IT
+  user:
+    name: "{{ snipeit_user }}"
+    uid: 777
+    group: "{{ snipeit_user }}"
+    groups: "{{ snipeit_user }}"
+    state: present
+  tags: snipeit
+
+- name: Create Directory Snipe IT
+  file:
+    state: directory
+    dest: "{{ snipeit_dir }}"
+    owner: "{{ snipeit_user }}"
+    group: "{{ snipeit_user }}"
+  tags: snipeit
+
+- name: Download SnipeIT files
+  get_url:
+    url: https://codeload.github.com/snipe/snipe-it/tar.gz/v4.8.0
+    dest: "/tmp/"
+    checksum: md5:97e6501e78f07959d502c0a16df61939
+  tags: snipeit
+
+- name: Extract SnipeIT into Workdir
+  unarchive:
+    src: "/tmp/snipe-it-4.8.0.tar.gz"
+    dest: "/tmp"
+    remote_src: yes
+  tags: snipeit
+
+- name: Move the file, if it doesnt exist already
+  shell: mv /tmp/snipe-it-4.8.0/* "{{ snipeit_dir }}"
+  ignore_errors: True
+  tags: snipeit
+
+- name: Change permission folder storage
+  file:
+    path: "{{ snipeit_dir }}/storage"
+    owner: vagrant
+    group: www-data
+    mode: "755"
+  tags: snipeit
+
+- name: Download composer
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: "/tmp/installer.php"
+  tags: snipeit, composer
+
+- name: Install composer
+  command: "{{ item }}"
+  with_items:
+    - "php /tmp/installer.php"
+    - mv composer.phar /usr/local/bin/composer
+  tags: snipeit, composer
+
+- composer:
+    command: install
+    working_dir: "{{ snipeit_dir}}"
+    prefer_source: yes
+    no_dev: yes
+  tags: snipeit, composer
+
+- name: copy env file
+  template:
+    src: .env
+    dest: "{{ snipeit_dir}}"
+  tags: snipeit
+
+- name: Run php artisan
+  command: php artisan key:generate --force
+  args:
+    chdir: "{{ snipeit_dir }}"
+  tags: snipeit
+
+- include: config-nginx.yml
+  tags: snipeit
+
+- include: config-php.yml
+  tags: snipeit

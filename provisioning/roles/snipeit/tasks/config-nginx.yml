@@ -1,0 +1,26 @@
+- name: Copy sites availabe file
+  template:
+    src: snipe.local.j2
+    dest: "/etc/nginx/sites-available/snipe.local"
+  tags: snipeit-nginx
+
+- name: Create a symbolic link
+  file:
+    src: "/etc/nginx/sites-available/snipe.local"
+    dest: "/etc/nginx/sites-enabled/snipe.local"
+    state: link
+  tags: snipeit-nginx
+
+- name: Remove defaults file
+  file:
+    path: /etc/nginx/sites-available/default
+    state: absent
+  tags: snipeit-nginx
+
+- name: restart nginx
+  systemd:
+    name: nginx
+    state: restarted
+  tags: snipeit-nginx
+
+

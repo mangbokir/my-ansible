@@ -5,5 +5,8 @@
 
   roles:
     - { role: common}
+    - { role: php71}
     - { role: nginx}
+    - { role: postgresql}
+    - { role: snipeit}
 
