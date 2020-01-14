@@ -1,0 +1,15 @@
+- name: Install postgresql
+  apt:
+    name: "{{ item.name }}"
+    state: present
+  with_items:
+    - { name: "postgresql"}
+    - { name: "postgresql-contrib"}
+  tags: postgresql
+
+- name: Restart and enable
+  systemd:
+    name: postgresql
+    state: restarted
+    enabled: yes
+  tags: postgresql
