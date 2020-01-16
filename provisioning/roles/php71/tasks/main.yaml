@@ -1,7 +1,7 @@
 - name: PHP | Add php-7.1.0 PPA
   apt_repository: repo='ppa:ondrej/php'
                   state=present
-                  update_cache=no
+                  update_cache=yes
   tags: php7.1
 
 - name: PHP | install php packages
