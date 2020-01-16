@@ -41,6 +41,12 @@
   ignore_errors: True
   tags: snipeit
 
+- name: copy env file
+  copy:
+    src: .env
+    dest: "{{ snipeit_dir}}"
+  tags: snipeit
+
 - name: Change permission folder storage
   file:
     path: "{{ snipeit_dir }}/storage"
@@ -68,12 +74,6 @@
     prefer_source: yes
     no_dev: yes
   tags: snipeit, composer
-
-- name: copy env file
-  copy:
-    src: .env
-    dest: "{{ snipeit_dir}}"
-  tags: snipeit
 
 - name: Run php artisan
   command: php artisan key:generate --force
